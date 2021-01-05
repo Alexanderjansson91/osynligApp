@@ -1,0 +1,2 @@
+# osynligApp
+React native App
