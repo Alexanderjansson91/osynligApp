@@ -1,10 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Alert, Button } from 'react-native';
+import {enableScreens} from "react-native-screens";
+import {NavigationContainer} from "@react-navigation/native"
+import {createNativeStackNavigator} from "react-native-screens/native-stack";
+
+enableScreens()
 
 import HeaderCaseInfoPage from './src/components/Header'
 import MainViewCaseInfoPage from './src/components/MainView'
 import HeadlineTextView from './src/components/HeadlineText'
+import SubTitleTextView from './src/components/SubTitle'
+import Home from './src/components/screens/Home'
+import NewTask from './src/components/screens/NewTask'
 
 
 class App extends React.Component {
@@ -17,14 +25,37 @@ class App extends React.Component {
     );
   };
 
+ 
+
+
   render() {
+
+    const Stack = createNativeStackNavigator()
+
+
+
+
     return (
 
       <View style={styles.topContainer}>
-        <HeaderCaseInfoPage headerText="Nordic dental" infoText="Profil" />
+        <HeaderCaseInfoPage headerText="" infoText="Profil" />
         <MainViewCaseInfoPage></MainViewCaseInfoPage>
+        
+      
           <View style={styles.container}>
+       
+          <NavigationContainer>
+          <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen 
+          options = {{headerLargeTitle:true}}
+          name="New" component={NewTask} />
+          </Stack.Navigator>
+          </NavigationContainer>
+
+
           <HeadlineTextView headerText="Nytt ärende"/>
+          <SubTitleTextView subTitleText="Tänk på följande vid fotograferingen" />
             <View style={styles.listContainer}>
 
               <FlatList
@@ -33,8 +64,6 @@ class App extends React.Component {
                   { key: 'Bra vinkel' }, 
                   { key: 'Vit bakrund' }, 
                   { key: 'Osäker, se exempel på respektive sida' },
- 
-
                 ]}
                 renderItem={({ item }) =>
                   <Text style={styles.item}
@@ -42,10 +71,10 @@ class App extends React.Component {
                 ItemSeparatorComponent={this.renderSeparator}
               />
             </View>
-
+     
 
           </View>
-       
+     
       </View>
 
     );
